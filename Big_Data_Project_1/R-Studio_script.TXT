@@ -1,0 +1,237 @@
+# Subject 3 (I).
+
+# Setting the directory that stores and searches for files.
+setwd("C:\\Users\\admin\\OneDrive\\Computer\\big data (1 project)")
+
+# Removes all variables in the workspace.
+rm(list = ls())
+
+# Closes all plots that have been created.
+graphics.off()
+
+# To add the library that contains the data I want.
+library(MASS)
+
+# Function that retrieves the data I want from the MASS library.
+data(Cars93)
+
+# First 6 observations from the dataset.
+head(Cars93)
+
+# Last 6 observations from the dataset.
+tail(Cars93, 6)
+
+# To see the data type of each variable read from the file.
+str(Cars93)
+
+# Convert the Cylinders variable from factor to int.
+Cars93$Cylinders <- as.integer(Cars93$Cylinders)
+
+# Convert our data to be only numeric.
+numeric_data <- Cars93[sapply(Cars93, is.numeric)]
+
+# Remove missing elements.
+numeric_data <- na.omit(numeric_data)
+
+# Display the new dataframe with only numeric data.
+print(numeric_data)
+
+# Perform Principal Component Analysis (PCA) using the covariance matrix.
+library(stats)
+covariance_matrix <- cov(numeric_data)
+pca_result <- prcomp(covariance_matrix)
+
+# Eigenvalues.
+eigenvalues <- pca_result$sdev^2
+print(eigenvalues)
+
+# Eigenvectors.
+eigenvectors <- pca_result$rotation
+print(eigenvectors)
+
+# Percentage of variance explained.
+variance_explained <- (eigenvalues / sum(eigenvalues)) * 100
+print(variance_explained)
+
+# Show the structure of a data set.
+str(eigenvalues)
+str(variance_explained)
+
+# Create a DataFrame with the eigenvalues.
+eigenvalues_df <- data.frame("Eigenvalues" = round(eigenvalues[1:2], 3))
+
+# Create a DataFrame with the percentage of variance explained.
+variance_explained_df <- data.frame("Variance_Explained" = round(variance_explained[1:2], 3))
+
+# Combine the DataFrames.
+pca_results_df <- data.frame(eigenvalues_df, variance_explained_df)
+
+# Set labels on the rows of the DataFrame.
+rownames(pca_results_df) <- c("pc1", "pc2")
+
+# Save the DataFrame as a CSV file.
+write.csv((pca_results_df), file = "pca_results.csv")
+
+# Subject 4 (I)
+
+# Setting the directory that stores and searches for files.
+setwd("C:\\Users\\admin\\OneDrive\\Computer\\big data (1 project)")
+
+# Removes all variables in the workspace.
+rm(list = ls())
+
+# Closes all plots that have been created.
+graphics.off()
+
+# Define the vectors we will use.
+vector1 <- c(1, 2, 3, 4, 5, 6)
+vector2 <- c(1, 2, 3, 4, 5, 6)
+vector3 <- c(-0.5, 1, 7.3, 7, 9.4, -8.2, 9, -6, -6.3)
+vector4 <- c(0.5, -1, -7.3, -7, -9.4, 8.2, -9, 6, 6.3)
+vector5 <- c(-0.5, 1, 7.3, 7, 9.4, -8.2)
+vector6 <- c(1.25, 9.02, -7.3, -7, 5, 1.3)
+vector7 <- c(0, 0, 0.2)
+vector8 <- c(0.2, 0.2, 0)
+
+# Define the euclideanDistance function.
+euclideanDistance <- function(vec1, vec2)
+    distance <- sqrt(sum((vec1-vec2)^2))
+
+# Call the euclideanDistance function and calculate the Euclidean distance.
+distance_1 <- euclideanDistance(vector1, vector2)
+distance_2 <- euclideanDistance(vector3, vector4)
+distance_3 <- euclideanDistance(vector5, vector6)
+distance_4 <- euclideanDistance(vector7, vector8)
+
+# Print the Euclidean distance.
+cat("Euclidean Distance:", distance_1, "\n")
+cat("Euclidean Distance:", distance_2, "\n")
+cat("Euclidean Distance:", distance_3, "\n")
+cat("Euclidean Distance:", distance_4, "\n")
+
+# Subject 4 (II)
+
+# Removes all variables in the workspace.
+rm(list = ls())
+
+# Closes all plots that have been created.
+graphics.off()
+
+# Define the vectors we will use.
+v1 <- c(25000, 14, 7 )
+v2 <- c(42000, 17, 9 )
+v3 <- c(55000, 22, 5 )
+v4 <- c(27000, 13, 11 )
+v5 <- c(58000, 21, 13 )
+
+# Define the euclideanDistance function.
+euclideanDistance <- function(vec1, vec2)
+    distance <- sqrt(sum((vec1-vec2)^2))
+
+# Call the euclideanDistance function and calculate the Euclidean distance.
+d1 <- euclideanDistance(v5, v1)
+d2 <- euclideanDistance(v5, v2)
+d3 <- euclideanDistance(v5, v3)
+d4 <- euclideanDistance(v5, v4)
+
+# Convert to a similarity index.
+s1 <- 1/(1+d1)
+s2 <- 1/(1+d2)
+s3 <- 1/(1+d3)
+s4 <- 1/(1+d4)
+
+# Define a function to find the maximum similarity.
+findMaxDistanceWithProfile <- function(d1, d2, d3, d4) {
+  distances <- c(d1, d2, d3, d4)
+  max_dist <- max(distances)
+  profile_code <- which.max(distances)
+  cat("The highest similarity index is:", max_dist, "\n")
+  cat("The profile code that most resembles user 5 is:", profile_code, "\n")
+  return(max_dist)
+}
+
+# Call the function with the four similarity indices and it will give us the highest one.
+max_dist <- findMaxDistanceWithProfile(s1, s2, s3, s4)
+
+
+
+# Subject 5
+
+# Setting the directory that stores and searches for files.
+setwd("C:\\Users\\admin\\OneDrive\\Computer\\big data (1 project)")
+
+# Removes all variables in the workspace.
+rm(list = ls())
+
+# Closes all plots that have been created.
+graphics.off()
+
+# Define the vectors we will use.
+v1 <- c(9.32, -8.3, 0.2)
+v2 <- c(-5.3, 8.2, 7)
+v3 <- c(6.5, 1.3, 0.3, 16, 2.4, -5.2, 2, -6, -6.3)
+v4 <- c(0.5, -1, -7.3, -7, -9.4, 8.2, -9, 6, 6.3)
+v5 <- c(-0.5, 1, 7.3, 7, 9.4, -8.2)
+v6 <- c(1.25, 9.02, -7.3, -7, 15, 12.3)
+v7 <- c(2, 8, 5.2)
+v8 <- c(2, 8, 5.2)
+
+# A function named cosineSimilarity which accepts two vectors as input and calculates the cosine similarity.
+cosineSimilarity <- function(vector1, vector2) {
+  dot_product <- sum(vector1 * vector2)
+  norm_vector1 <- sqrt(sum(vector1^2))
+  norm_vector2 <- sqrt(sum(vector2^2))
+  similarity <- dot_product / (norm_vector1 * norm_vector2)
+  return(similarity)
+}
+
+# Call the cosineSimilarity function and calculate the cosine similarity.
+similarity1 <- cosineSimilarity(v1,v2)
+similarity2 <- cosineSimilarity(v3,v4)
+similarity3 <- cosineSimilarity(v5,v6)
+similarity4 <- cosineSimilarity(v7,v8)
+
+# Print the cosine similarity.
+cat("Cosine Similarity:", similarity1)
+cat("Cosine Similarity:", similarity2)
+cat("Cosine Similarity:", similarity3)
+cat("Cosine Similarity:", similarity4)
+
+
+
+# Subject 6
+
+# Setting the directory that stores and searches for files.
+setwd("C:\\Users\\admin\\OneDrive\\Computer\\big data (1 project)")
+
+# Removes all variables in the workspace.
+rm(list = ls())
+
+# Closes all plots that have been created.
+graphics.off()
+
+# Define the vectors we will use.
+v1 <- c("Green", "Potato", "Ford")
+v2 <- c("Tyrian purple", "Pasta", "Opel")
+v3 <- c("Eagle", "Ronaldo", "Real madrid", "Prussian blue", "Michael Bay")
+v4 <- c("Eagle", "Ronaldo", "Real madrid", "Prussian blue", "Michael Bay")
+v5 <- c("Werner Herzog", "Aquirre, the wrath of God", "Audi", "Spanish red")
+v6 <- c("Martin Scorsese", "Taxi driver", "Toyota", "Spanish red")
+
+# Function named nominalDistance, which calculates the distance based on an index ranging from 0 to 1. As the index increases, the greater the distance between the two vectors.
+nominalDistance <- function(vec1, vec2) {
+  distance <- sum(vec1 == vec2)
+  index <- distance / length(vec1)
+  return(index)
+}
+
+# Calls the nominalDistance function and calculates the distance between two vectors.
+index1 <- nominalDistance(v1, v2)
+index2 <- nominalDistance(v3, v4)
+index3 <- nominalDistance(v5, v6)
+
+cat("distance 1:", index1 , "\n")
+cat("distance 2:", index2 , "\n")
+cat("distance 3:", index3 , "\n")
+
+

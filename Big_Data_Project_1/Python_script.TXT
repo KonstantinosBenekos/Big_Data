@@ -1,0 +1,231 @@
+Subject 3
+# Management of directory through python.
+import os
+
+# Get the current working directory.
+current_directory = os.getcwd()
+
+print("Current Directory:", current_directory)
+
+# To search from another folder the files we want to retrieve.
+new_directory = 'C:\\Users\\admin\\OneDrive\\Computer\\big data (1 project)'
+
+os.chdir(new_directory)
+
+# To confirm that the path from which files are retrieved has changed.
+current_directory = os.getcwd()
+
+print("New Current Directory:", current_directory)
+
+# Package to read csv files.
+import pandas as pd
+
+# Read a csv file into a dataframe.
+WineData = pd.read_csv("winequality-white.csv", header=0, sep=";", engine='python')
+
+# Display the first 5 rows of the data frame.
+print(WineData.head())
+
+# Display the last 5 rows of the data frame.
+print(WineData.tail())
+
+# Checking for missing values in our data.
+missing_values = WineData.isna().sum()
+
+# It will show how many values are missing for each variable.
+print(missing_values)
+
+# Find the index of the column where the 'quality' variable is located.
+column_index = WineData.columns.get_loc('quality')
+
+# Here we ask it to show us the column where it is located.
+print("The 'quality' variable is located in the column with index:", column_index)
+
+# Here we remove the 'quality' variable because it is categorical so that we can do pca.
+WineData = WineData.drop('quality', axis=1)
+
+# We ask it to print the first 5 rows to see if the previous command executed correctly.
+print(WineData.head())
+
+# These two lines are necessary to run the python.
+from sklearn import decomposition
+
+from sklearn.decomposition import PCA
+
+# To be able to use vectors.
+import numpy as np
+
+# Run the pca function and tell it how many principal components we want.
+pca = decomposition.PCA(n_components=2)
+
+# Here we run the pca on the imported data frame.
+pca.fit(WineData)
+
+# To convert the data of the WineData dataset to the new coordinate system defined by the two eigenvectors obtained from (PCA).
+transformedWineData = pca.transform(WineData)
+
+# Printing the eigenvalues
+print("Eigenvalues:")
+print(pca.explained_variance_)
+
+# Printing the eigenvectors
+print("Eigenvectors:")
+print(pca.components_)
+
+# Printing the percentage of variance explained by each principal component
+print("Percentage of Variance Explained by Each Principal Component:")
+print(pca.explained_variance_ratio_)
+
+
+# Creating a DataFrame containing the eigenvalues, eigenvectors, and percentage of variance explained by each principal component.
+df = pd.DataFrame({'eigenvalues': pca.explained_variance_.round(3), 'explained_variance_ratio': pca.explained_variance_ratio_.round(3)})
+
+# Save the DataFrame to a CSV file
+df.to_csv('pca_results_subset.csv', index=False)
+
+
+
+# Subject 4 (I)
+
+# To be able to use vectors.
+import numpy as np
+
+# provides many mathematical functions that we will need such as sqrt.
+import math
+
+# Creating a function that calculates the Euclidean distance of two n-dimensional vectors.
+def euclideanDistance(vector1, vector2,do_print=True):
+    distance=math.sqrt(sum((np.array(vector1) - np.array(vector2))**2))
+    if do_print:
+        print("Euclidean Distance:", distance)
+    return distance
+    
+# Creating vectors with elements [n].
+v1 = np.array([1,2,3,4,5,6])
+v2 = np.array([1,2,3,4,5,6])
+v3 = np.array([-0.5, 1, 7.3, 7, 9.4, -8.2, 9, -6, -6.3])
+v4 = np.array([0.5, -1, -7.3, -7, -9.4, 8.2, -9, 6, 6.3])
+v5 = np.array([-0.5, 1, 7.3, 7, 9.4, -8.2])
+v6 = np.array([1.25, 9.02, -7.3, -7, 5, 1.3])
+v7 = np.array([0, 0, 0.2])
+v8 = np.array([0.2, 0.2, 0])
+
+# Calculating the Euclidean distance.
+euclideanDistance(v1,v2)
+euclideanDistance(v3,v4)
+euclideanDistance(v5,v6)
+euclideanDistance(v7,v8)
+
+
+# Subject 4(II)
+
+def find_max_and_position(a, b, c, d):
+    numbers = [a, b, c, d]
+    max_value = max(numbers)
+    max_index = numbers.index(max_value)+1
+    return max_value, max_index
+
+# Creating vectors with elements [n].
+v1 = np.array([25000,14,7])
+v2 = np.array([42000,17,9])
+v3 = np.array([55000,22,5])
+v4 = np.array([27000,13,11])
+v5 = np.array([58000,21,13])
+
+# Calculating the Euclidean distance.
+d1 = euclideanDistance(v5,v1,do_print=False)
+d2 = euclideanDistance(v5,v2,do_print=False)
+d3 = euclideanDistance(v5,v3,do_print=False)
+d4 = euclideanDistance(v5,v4,do_print=False)
+
+# Converting the Euclidean distance to a similarity measure.
+s1 = 1 / (1 + d1)
+s2 = 1 / (1 + d2)
+s3 = 1 / (1 + d3)
+s4 = 1 / (1 + d4)
+
+result, position = find_max_and_position(s1,s2,s3,s4)
+
+print("The user with the highest similarity:", result)
+
+print("Is the profile of user with code:", position)
+
+
+
+# Subject 5
+
+# To be able to use vectors.
+import numpy as np
+
+# provides many mathematical functions that we will need such as sqrt. 
+import math
+
+# Creating a function that calculates the cosine similarity of two n-dimensional vectors.
+def cosineSimilarity(vector1, vector2):
+     dot_product= sum(vector1*vector2)
+     norm_vector1= math.sqrt(sum(vector1**2))
+     norm_vector2= math.sqrt(sum(vector2**2))
+     similarity= dot_product/(norm_vector1*norm_vector2)
+     return similarity
+
+# Creating vectors with elements [n].
+v1=np.array([9.32, -8.3, 0.2])
+v2=np.array([-5.3, 8.2, 7])
+v3=np.array([6.5, 1.3, 0.3, 16, 2.4, -5.2, 2, -6, -6.3])
+v4=np.array([0.5, -1, -7.3, -7, -9.4, 8.2, -9, 6, 6.3])
+v5=np.array([-0.5, 1, 7.3, 7, 9.4, -8.2])
+v6=np.array([1.25, 9.02, -7.3, -7, 15, 12.3])
+v7=np.array([2, 8, 5.2])
+v8=np.array([2, 8, 5.2])
+
+# Calculating the cosine similarity.
+similarity1=cosineSimilarity(v1,v2)
+similarity2=cosineSimilarity(v3,v4)
+similarity3=cosineSimilarity(v5,v6)
+similarity4=cosineSimilarity(v7,v8)
+
+# displays on the screen the cosine similarity between two vectors for each pair.
+print("Cosine Similarity:", round(similarity1,ndigits=4))
+print("Cosine Similarity:", round(similarity2,ndigits=4))
+print("Cosine Similarity:", round(similarity3,ndigits=4))
+print("Cosine Similarity:", round(similarity4,ndigits=4))
+
+
+
+# Subject 6
+
+# To be able to use vectors.
+import numpy as np
+
+# provides many mathematical functions that we will need such as sqrt. 
+import math
+
+# Define the vectors we will use
+v1 = ["Green", "Potato", "Ford"]
+v2 = ["Tyrian purple", "Pasta", "Opel"]
+v3 = ["Eagle", "Ronaldo", "Real madrid", "Prussian blue", "Michael Bay"]
+v4 = ["Eagle", "Ronaldo", "Real madrid", "Prussian blue", "Michael Bay"]
+v5 = ["Werner Herzog", "Aquirre, the wrath of God", "Audi", "Spanish red"]
+v6 = ["Martin Scorsese", "Taxi driver", "Toyota", "Spanish red"]
+
+
+
+# Function named nominalDistance, which calculates the distance based on an index ranging from 0 to 1. As the index increases, the greater the distance between the two vectors.
+def nominalDistance(vec1, vec2):
+    distance=0
+    for i in range (len(vec1)):
+        if vec1[i] != vec2[i]:
+            distance+=1
+    index = distance / len(vec1)
+    return index
+
+# Calls the nominalDistance function and calculates the distance between two vectors.
+index1 = nominalDistance(v1, v2)
+index2 = nominalDistance(v3, v4)
+index3 = nominalDistance(v5, v6)
+
+
+print("distance 1:", index1)
+print("distance 2:", index2)
+print("distance 3:", index3)
+
