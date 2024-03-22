@@ -15,3 +15,23 @@ The folder "Wine + Quality(1)" holds the data sets used in the Subject 3.
 "R-Studio_script.TXT" on the other hand contains the adjacent R script for all subjects of the assignment.
 
 Finally, "big_data_project.pdf" contains the final presentation submitted.
+
+Assignment 2:
+
+Folder "Big_Data_Project_2", holds all files related to the second assignment.
+
+The overall theme of this assignment revols around the application of deccision tree/ Naive bayes classification models, furthermore it also involes text proccesing.
+
+Folder "Data_sets_used" contains all the relevant data sets used throughout this assignment. 
+
+Folder "Project_outline_Litterature " contains the assignment's outline as well as the refferenced papers. 
+
+"Python-SentimentAnalyis-NaiveBayes.py" contains an example code in Python for sentiment analysis using NaiveBayes classifier.
+
+"Python.TXT", contains the full Python script for this assignment. 
+
+"R.TXT", contaisbn the full R script for this assignment.
+
+"big_data_project_2.pdf", is the final form assignment submitted presenting the results.
+
+Assignment 3:
