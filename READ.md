@@ -1,5 +1,7 @@
 This repository holds all files related to the completed assignments of the subject of 'Managing Big Data,' taught at the Master's program 'Applied Econometrics & Data Analysis' of the University of Patras, Department of Economics.
 
+The programming languages utilized throughout the assignments are R and Python.
+
 Assignmet 1:
 
 Folder "Big_Data_Project_1", holds all files related to the first assignment.
